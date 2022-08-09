@@ -1,7 +1,21 @@
 # go-marketo
 
-[![GoDoc](https://godoc.org/github.com/polytomic/go-marketo?status.svg)](https://godoc.org/github.com/polytomic/go-marketo)
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/polytomic/go-marketo/master/LICENSE)
+---
+
+rusq: This is a fork of https://github.com/polytomic/go-marketo with small fixes
+to tests and the error that is returned after each call.  I just need it
+working, and polytomic doesn't seem to be maintaining it at the moment, as the
+[fix for this error][1] in the original repo hasn't been merged since 08/2021.
+
+If you wish to contribute, please submit a PR, I'll do my best to review and
+merge it.
+
+If you wish to become a maintainer for this fork, please let me know.
+
+---
+
+[![GoDoc](https://godoc.org/github.com/polytomic/go-marketo?status.svg)](https://godoc.org/github.com/rusq/go-marketo)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/rusq/go-marketo/master/LICENSE)
 
 Inspired by [FrenchBen/goketo](https://github.com/FrenchBen/goketo)
 and derived from
@@ -13,7 +27,7 @@ along with some utility structs for handling responses.
 ## Installation
 
 ```bash
-go get github.com/polytomic/go-marketo
+go get github.com/rusq/go-marketo
 ```
 
 ## Usage
@@ -155,3 +169,4 @@ type RecordResult struct {
 
 MIT
 
+[1]:https://github.com/polytomic/go-marketo/pull/1

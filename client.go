@@ -145,10 +145,15 @@ func NewClient(config ClientConfig) (*Client, error) {
 	}
 
 	if _, err := c.RefreshToken(); err != nil {
-		return nil, errors.New("Unable to refresh Marketo auth token")
+		return nil, fmt.Errorf("Unable to refresh Marketo auth token: %w", err)
 	}
 	return c, nil
 }
+
+var (
+	ErrAuth  = errors.New("authentication error")
+	ErrToken = errors.New("Unable to get Market auth token")
+)
 
 // RefreshToken refreshes the auth token.
 // This is purely for testing purpose and not intended to be used.
@@ -162,19 +167,19 @@ func (c *Client) RefreshToken() (auth AuthToken, err error) {
 	// Make request for token
 	resp, err := c.authClient.Get(c.identityEndpoint)
 	if err != nil {
-		return auth, errors.New("Unable to get Market auth token")
+		return auth, ErrToken
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != 200 {
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return auth, errors.New("Server error getting marketo auth token")
+			return auth, ErrToken
 		}
-		return auth, fmt.Errorf("authentication error: %d %s", resp.StatusCode, body)
+		return auth, fmt.Errorf("%w: %d %s", ErrAuth, resp.StatusCode, body)
 	}
 
 	if err := json.NewDecoder(resp.Body).Decode(&auth); err != nil {
-		return auth, errors.New("Unable to decode marketo error token")
+		return auth, fmt.Errorf("Unable to decode marketo error token: %w", err)
 	}
 	if c.debug {
 		log.Printf("[marketo/RefreshToken] New token: %v", auth)
@@ -274,7 +279,10 @@ func (c *Client) checkToken(response *Response) (retry bool, err error) {
 		}
 		_, err = c.RefreshToken()
 	}
-	return retry, errors.New("Invalid/Expired Marketo Auth Token")
+	if err != nil {
+		return retry, errors.New("Invalid/Expired Marketo Auth Token")
+	}
+	return retry, nil
 }
 
 // Get performs an HTTP GET for the specified resource url

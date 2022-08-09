@@ -29,7 +29,7 @@ func TestListCustomObjects(t *testing.T) {
 	client, err := NewClient(ClientConfig{
 		ID:       clientID,
 		Secret:   clientSecret,
-		Endpoint: "https://marketo.testing",
+		Endpoint: testHost,
 		Debug:    true,
 	})
 	require.NoError(t, err)
@@ -60,7 +60,7 @@ func TestCustomObjectDescribe(t *testing.T) {
 		client, err := NewClient(ClientConfig{
 			ID:       clientID,
 			Secret:   clientSecret,
-			Endpoint: "https://marketo.testing",
+			Endpoint: testHost,
 			Debug:    true,
 		})
 		require.NoError(t, err)
@@ -99,7 +99,7 @@ func TestCustomObjectDescribe(t *testing.T) {
 		client, err := NewClient(ClientConfig{
 			ID:       clientID,
 			Secret:   clientSecret,
-			Endpoint: "https://marketo.testing",
+			Endpoint: testHost,
 			Debug:    true,
 		})
 		require.NoError(t, err)
@@ -133,7 +133,7 @@ func TestFitlerCustomObjects(t *testing.T) {
 	client, err := NewClient(ClientConfig{
 		ID:       clientID,
 		Secret:   clientSecret,
-		Endpoint: "https://marketo.testing",
+		Endpoint: testHost,
 		Debug:    true,
 	})
 	require.NoError(t, err)

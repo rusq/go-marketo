@@ -6,8 +6,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
-
-	"github.com/pkg/errors"
 )
 
 // A Reason is provided along with errors, warnings, and some operations
@@ -105,7 +103,7 @@ func (e Error) Error() string {
 func handleError(operation string, resp *http.Response) error {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return errors.Wrap(err, "unable to read marketo error response")
+		return fmt.Errorf("unable to read marketo error response: %w", err)
 	}
 
 	// attempt to deserialize the error response

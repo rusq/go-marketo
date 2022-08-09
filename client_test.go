@@ -2,6 +2,7 @@ package marketo
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -143,9 +144,8 @@ func TestNewClientError(t *testing.T) {
 
 	_, err := NewClient(config)
 	if err != nil {
-		expectedError := fmt.Sprintf("authentication error: 401 %s", authResponseError)
-		if err.Error() != expectedError {
-			t.Errorf("Expected response:\n%s\n%s", expectedError, err)
+		if !errors.Is(err, ErrAuth) {
+			t.Errorf("want=%q\ngot=%q", ErrAuth, err)
 		}
 
 		if called != 1 {
